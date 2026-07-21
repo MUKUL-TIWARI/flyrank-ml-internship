@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>capstone_report</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="predicting-low-engagement-web-pages-for-editorial">Predicting
+Low-Engagement Web Pages for Editorial</h1>
+<h2 id="abstract">Abstract</h2>
+<p>Editorial teams often struggle to identify which webpages require
+immediate attention when managing large websites. This project presents
+a machine learning approach for prioritizing pages that are likely to
+receive zero engaged sessions using Google Search Console and Google
+Analytics 4 metrics. A Random Forest classifier was trained using search
+impressions, clicks, and average search position, and compared against a
+simple rule-based baseline. The proposed model achieved an accuracy of
+97.2% and an F1-score of 98.6%, substantially outperforming the
+baseline. The results demonstrate that machine learning can effectively
+support editorial decision-making by identifying pages that should be
+reviewed first, allowing teams to allocate their effort more
+efficiently.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Modern websites often contain thousands of pages, making it difficult
+for editorial teams to manually determine which pages require attention.
+Pages with low engagement or poor search visibility may reduce the
+overall effectiveness of a website and consume valuable maintenance
+resources.</p>
+<p>This project investigates whether machine learning can help
+prioritize content pages for editorial review. Using search performance
+metrics from Google Search Console and engagement metrics from Google
+Analytics 4, a classification model was trained to predict whether a
+page is likely to receive zero engaged sessions.</p>
+<p>The objective is not to replace human editors but to provide a ranked
+list of pages that deserve review first. Such a system can help content
+teams focus their effort where it is most likely to improve user
+engagement and search performance.</p>
+<hr />
+<h2 id="data">2. Data</h2>
+<p>The dataset used in this project was provided as part of the FlyRank
+Machine Learning Internship. It combines website performance data from
+Google Search Console (GSC) and Google Analytics 4 (GA4).</p>
+<p>For this study, three features were selected:</p>
+<ul>
+<li><strong>gsc_impressions</strong> – Number of times a page appeared
+in Google Search results.</li>
+<li><strong>gsc_clicks</strong> – Number of clicks received from Google
+Search.</li>
+<li><strong>gsc_avg_position</strong> – Average search ranking position
+of the page.</li>
+</ul>
+<p>The target variable was defined using the GA4 metric <strong>engaged
+sessions</strong>. Pages with zero engaged sessions were labeled as
+requiring editorial review, while all other pages were labeled as not
+requiring immediate review.</p>
+<p>The dataset was loaded into DuckDB from the provided Parquet files,
+cleaned by removing missing values, and prepared for supervised machine
+learning.</p>
+<hr />
+<h2 id="methodology">3. Methodology</h2>
+<p>The objective of this project was to predict whether a webpage would
+receive zero engaged sessions using search performance metrics.</p>
+<p>A simple rule-based baseline was first created using the average
+search position. Pages with an average position greater than 20 were
+predicted as requiring editorial review. This baseline provided a
+reference point for evaluating the machine learning model.</p>
+<p>The primary model used in this project was a Random Forest Classifier
+from scikit-learn. The model was trained using the following three input
+features:</p>
+<ul>
+<li>gsc_impressions</li>
+<li>gsc_clicks</li>
+<li>gsc_avg_position</li>
+</ul>
+<p>The dataset was divided into training and testing sets using an 80/20
+split. Model performance was evaluated using Accuracy, Precision,
+Recall, and F1-score.</p>
+<p>To verify that the model generalized well, an additional grouped
+validation split was performed to reduce the risk of data leakage
+between similar pages.</p>
+<hr />
+<h2 id="results">4. Results</h2>
+<p>The Random Forest model substantially outperformed the rule-based
+baseline across all evaluation metrics.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: right;">Accuracy</th>
+<th style="text-align: right;">Precision</th>
+<th style="text-align: right;">Recall</th>
+<th style="text-align: right;">F1-score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baseline</td>
+<td style="text-align: right;">0.221</td>
+<td style="text-align: right;">0.957</td>
+<td style="text-align: right;">0.210</td>
+<td style="text-align: right;">0.345</td>
+</tr>
+<tr>
+<td>Random Forest</td>
+<td style="text-align: right;">0.972</td>
+<td style="text-align: right;">0.976</td>
+<td style="text-align: right;">0.996</td>
+<td style="text-align: right;">0.986</td>
+</tr>
+</tbody>
+</table>
+<p>The Random Forest classifier achieved substantially better
+performance than the rule-based baseline. In particular, the model
+obtained an F1-score of 0.986 compared with 0.345 for the baseline while
+maintaining very high recall (0.996). These results indicate that the
+selected search performance features are effective predictors of pages
+requiring editorial review.</p>
+<p>Feature importance analysis showed that search impressions, clicks,
+and average search position all contributed to the model’s predictions,
+with search visibility metrics providing the strongest signals.</p>
+<p>A grouped validation experiment achieved an accuracy of 0.967, which
+was very close to the random train-test split accuracy of 0.972. This
+consistency suggests that the model generalized well and that the
+evaluation was not significantly affected by data leakage.</p>
+<h3 id="model-performance-comparison">Model Performance Comparison</h3>
+<p>The following chart compares the performance of the baseline method
+and the Random Forest model across all evaluation metrics.</p>
+<figure>
+<img src="model_performance.png" alt="Model Performance Comparison" />
+<figcaption aria-hidden="true">Model Performance Comparison</figcaption>
+</figure>
+<h3 id="feature-importance">Feature Importance</h3>
+<p>The figure below shows the relative importance of each feature used
+by the Random Forest model. Search impressions contributed the most to
+the predictions, followed by clicks and average search position.</p>
+<figure>
+<img src="feature_importance.png" alt="Feature Importance" />
+<figcaption aria-hidden="true">Feature Importance</figcaption>
+</figure>
+<hr />
+<h2 id="limitations-honest-framing">5. Limitations &amp; Honest
+Framing</h2>
+<p>Although the model achieved excellent predictive performance, several
+limitations should be considered.</p>
+<p>The model was trained using only three input features. Additional
+information such as page content, page age, backlinks, or user behavior
+could further improve prediction quality.</p>
+<p>The dataset represents a specific website environment and may not
+generalize perfectly to all websites without retraining.</p>
+<p>Finally, the model is intended to assist editorial teams by
+prioritizing pages for review rather than replacing human
+decision-making.</p>
+<hr />
+<h2 id="ranked-recommendations">6. Ranked Recommendations</h2>
+<p>Based on the model predictions, editorial teams should prioritize
+pages predicted to receive zero engaged sessions. These pages are the
+most likely candidates for content improvement.</p>
+<p>Recommended actions include:</p>
+<ol type="1">
+<li>Review pages with poor search visibility.</li>
+<li>Update outdated or low-quality content.</li>
+<li>Improve titles and meta descriptions to increase click-through
+rates.</li>
+<li>Add internal links to important pages.</li>
+<li>Monitor the impact of changes using Google Analytics 4 and Google
+Search Console.</li>
+</ol>
+<p>The model should be used as a decision-support tool that helps
+editors prioritize their workload rather than as a replacement for human
+expertise.</p>
+<hr />
+<h2 id="reproducibility">7. Reproducibility</h2>
+<p>This project was implemented entirely in Python using open-source
+libraries.</p>
+<p>Main tools used include:</p>
+<ul>
+<li>Python</li>
+<li>Pandas</li>
+<li>DuckDB</li>
+<li>Scikit-learn</li>
+<li>Matplotlib</li>
+</ul>
+<p>The workflow consists of:</p>
+<ol type="1">
+<li>Loading the dataset from Parquet files.</li>
+<li>Creating the target label.</li>
+<li>Training a Random Forest classifier.</li>
+<li>Evaluating the model against a rule-based baseline.</li>
+<li>Validating the model using both random and grouped data splits.</li>
+<li>Producing feature importance analysis and performance
+visualizations.</li>
+</ol>
+<p>All code required to reproduce this project is available in the
+GitHub repository.</p>
+<p>Repository: https://github.com/MUKUL-TIWARI/flyrank-ml-internship</p>
+<p>Notebook: work/notebooks/capstone.ipynb</p>
+<p>The repository includes the notebook, generated figures, and this
+research paper.</p>
+<hr />
+<h2 id="acknowledgments-data-credit">8. Acknowledgments &amp; Data
+Credit</h2>
+<p>This work was completed as part of the FlyRank Machine Learning
+Internship.</p>
+<p>The dataset was provided by <strong>FlyRank</strong> for educational
+purposes and combines anonymized Google Search Console (GSC) and Google
+Analytics 4 (GA4) metrics.</p>
+<p>Built on the <strong>FlyRank ML Internship dataset</strong>.</p>
+<p>Data source: <a href="https://flyrank.ai"
+class="uri">https://flyrank.ai</a></p>
+<p>The project follows the internship guidelines and uses only the
+provided data for model development and evaluation.</p>
+</body>
+</html>
