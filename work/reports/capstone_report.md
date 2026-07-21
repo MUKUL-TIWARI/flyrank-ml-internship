@@ -13,6 +13,7 @@ Modern websites often contain thousands of pages, making it difficult for editor
 This project investigates whether machine learning can help prioritize content pages for editorial review. Using search performance metrics from Google Search Console and engagement metrics from Google Analytics 4, a classification model was trained to predict whether a page is likely to receive zero engaged sessions.
 
 The objective is not to replace human editors but to provide a ranked list of pages that deserve review first. Such a system can help content teams focus their effort where it is most likely to improve user engagement and search performance.
+
 ---
 
 ## 2. Data
@@ -63,6 +64,18 @@ The Random Forest classifier achieved substantially better performance than the 
 Feature importance analysis showed that search impressions, clicks, and average search position all contributed to the model's predictions, with search visibility metrics providing the strongest signals.
 
 A grouped validation experiment achieved an accuracy of 0.967, which was very close to the random train-test split accuracy of 0.972. This consistency suggests that the model generalized well and that the evaluation was not significantly affected by data leakage.
+
+### Model Performance Comparison
+
+The following chart compares the performance of the baseline method and the Random Forest model across all evaluation metrics.
+
+![Model Performance Comparison](model_performance.png)
+
+### Feature Importance
+
+The figure below shows the relative importance of each feature used by the Random Forest model. Search impressions contributed the most to the predictions, followed by clicks and average search position.
+
+![Feature Importance](feature_importance.png)
 
 ---
 
@@ -115,7 +128,15 @@ The workflow consists of:
 5. Validating the model using both random and grouped data splits.
 6. Producing feature importance analysis and performance visualizations.
 
-All code required to reproduce the results is included in the accompanying Jupyter notebook.
+All code required to reproduce this project is available in the GitHub repository.
+
+Repository:
+https://github.com/MUKUL-TIWARI/flyrank-ml-internship
+
+Notebook:
+work/notebooks/capstone.ipynb
+
+The repository includes the notebook, generated figures, and this research paper.
 
 ---
 
@@ -123,6 +144,10 @@ All code required to reproduce the results is included in the accompanying Jupyt
 
 This work was completed as part of the FlyRank Machine Learning Internship.
 
-The dataset was provided by FlyRank for educational purposes and combines anonymized Google Search Console (GSC) and Google Analytics 4 (GA4) metrics.
+The dataset was provided by **FlyRank** for educational purposes and combines anonymized Google Search Console (GSC) and Google Analytics 4 (GA4) metrics.
+
+Built on the **FlyRank ML Internship dataset**.
+
+Data source: <https://flyrank.ai>
 
 The project follows the internship guidelines and uses only the provided data for model development and evaluation.
