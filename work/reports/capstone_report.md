@@ -2,17 +2,21 @@
 
 ## Abstract
 
-Editorial teams often struggle to identify which webpages require immediate attention when managing large websites. This project presents a machine learning approach for prioritizing pages that are likely to receive zero engaged sessions using Google Search Console and Google Analytics 4 metrics. A Random Forest classifier was trained using search impressions, clicks, and average search position, and compared against a simple rule-based baseline. The proposed model achieved an accuracy of 97.2% and an F1-score of 98.6%, substantially outperforming the baseline. The results demonstrate that machine learning can effectively support editorial decision-making by identifying pages that should be reviewed first, allowing teams to allocate their effort more efficiently.
+Editorial teams often manage thousands of web pages, making it difficult to identify which pages deserve attention first. This study investigates whether publicly available search performance metrics can be used to identify pages that are likely to receive low user engagement and therefore benefit from editorial review.
+
+Using search-related features such as impressions, clicks, and average search position, a Random Forest classifier was trained to predict low-engagement pages. The model achieved strong predictive performance while relying only on information available before prediction, reducing the risk of feature leakage.
+
+The results demonstrate that machine learning can support editorial prioritization by highlighting pages that may require content improvement. Rather than replacing human judgment, the model provides decision-support that helps content teams focus their efforts more efficiently.
 
 ---
 
 ## 1. Introduction
 
-Modern websites often contain thousands of pages, making it difficult for editorial teams to manually determine which pages require attention. Pages with low engagement or poor search visibility may reduce the overall effectiveness of a website and consume valuable maintenance resources.
+Large content platforms continuously publish and maintain thousands of web pages. Because editorial resources are limited, manually identifying pages that require attention is difficult and time-consuming.
 
-This project investigates whether machine learning can help prioritize content pages for editorial review. Using search performance metrics from Google Search Console and engagement metrics from Google Analytics 4, a classification model was trained to predict whether a page is likely to receive zero engaged sessions.
+This project addresses a practical content management problem inspired by FlyRank's machine learning internship: identifying low-engagement pages that could benefit from editorial review. Instead of relying on manual inspection, machine learning can prioritize pages using search performance signals that are available before prediction.
 
-The objective is not to replace human editors but to provide a ranked list of pages that deserve review first. Such a system can help content teams focus their effort where it is most likely to improve user engagement and search performance.
+A Random Forest classifier was developed using search metrics such as impressions, clicks, and average search position. The objective is not to replace editorial decisions but to provide decision-support that helps teams identify content opportunities more efficiently while avoiding feature leakage and maintaining reproducible analysis.
 
 ---
 
