@@ -1,5 +1,4 @@
-[project]
-name = "search-intelligence-platform"
+project name = "search-intelligence-platform"
 version = "0.1.0"
 description = "Search Intelligence Decision Support Platform built on the FlyRank Internship Warehouse."
 readme = "README.md"
