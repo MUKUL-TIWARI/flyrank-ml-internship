@@ -1,0 +1,11 @@
+[project]
+name = "low-engagement-prediction"
+version = "0.1.0"
+description = "Predicting Low-Engagement Web Pages for Editorial Review"
+requires-python = ">=3.11"
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
