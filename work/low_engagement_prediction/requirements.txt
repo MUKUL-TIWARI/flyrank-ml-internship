@@ -1,0 +1,13 @@
+duckdb
+pandas
+numpy
+scikit-learn
+xgboost
+shap
+matplotlib
+seaborn
+pyarrow
+huggingface_hub
+python-dotenv
+joblib
+tabulate
