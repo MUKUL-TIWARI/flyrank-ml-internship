@@ -1,11 +1,5 @@
-# Predicting Low-Engagement Web Pages for Editorial Review
+# Predicting Low-Engagement Web Pages for Editorial Review 
 
-
-![Python](https://img.shields.io/badge/Python-3.12-blue)
-
-![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-ML-orange)
-
-![Random Forest](https://img.shields.io/badge/Model-Random%20Forest-green)
 
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 
